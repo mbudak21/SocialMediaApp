@@ -8,11 +8,22 @@ SIGNATURE: <Mehmet Murat Budak, 78940>
 ************************************************************************************************************/
 package api;
 
-public class Main {
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Test {
 
 	public static void main(String[] args) {
-		System.out.print("Start");
-
+		
+		System.out.print("Start\n");
+//		try (Scanner input = new Scanner(System.in)) {
+//			System.out.print(input.next());
+//		}
+	HashSet<String> users = new HashSet<String>();
+	users.add("A");
+	users.add("A");
+	System.out.print(users);
 	}
 
 }
