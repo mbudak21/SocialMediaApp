@@ -8,22 +8,31 @@ SIGNATURE: <Mehmet Murat Budak, 78940>
 ************************************************************************************************************/
 package api;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
-
 public class Test {
 
 	public static void main(String[] args) {
 		
-		System.out.print("Start\n");
+		System.out.println("Started");
+		
+		User user1 = new User("mbudak21","Bjh310hyy","Mehmet Murat", "Budak", 18, "mbudak21@ku.edu.tr");
+		User user2 = new User("gabechu","1234","Ahmet", "Zade", 22, "aasddwq@ku.edu.tr");
+		User user3 = new User("hasan","1111","hasan123", "Celik", 55, "aaaaaa@asd.com");
+		User user4 = new User("hasan","123","144", "1", 223, "aaaaaa@asdyt51.com");
+		
+		
+		
+		
+		
+		
+		
+		
 //		try (Scanner input = new Scanner(System.in)) {
 //			System.out.print(input.next());
 //		}
-	HashSet<String> users = new HashSet<String>();
-	users.add("A");
-	users.add("A");
-	System.out.print(users);
+//	HashSet<String> users = new HashSet<String>();
+//	users.add("A");
+//	users.add("A");
+//	System.out.print(users);
 	}
 
 }
