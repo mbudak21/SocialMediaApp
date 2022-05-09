@@ -39,10 +39,10 @@ public class User {
 	public User(String nickname, String password, String name, String surname, String email, int age){
 		this.nickname		= nickname;
 		this.password		= password;
-		this.name				= name;
-		this.surname			= surname;
-		this.email				= email;
-		this.age					= age;
+		this.name			= name;
+		this.surname		= surname;
+		this.email			= email;
+		this.age			= age;
 
 
 		if (User.users.contains(this)) { // If the users list already has the user with the same nickname do not add the user to the list
@@ -60,7 +60,8 @@ public class User {
 	public static User Login(String nickname, String password) {
 		if (User.search(nickname) == true) {
 		    for(User user : User.getUsers()) {
-		    	if(user.getNickname() == nickname && user.getPassword() == password) {
+		    	//System.out.printf("%s: %b, %b\n",user.getNickname(), user.getNickname() == nickname,user.getPassword() == password);
+		    	if(user.getNickname().equals(nickname) && user.getPassword().equals(password)) {
 		    		return user;
 		    	}
 		    }
@@ -90,7 +91,7 @@ public class User {
 	// Generated with eclipse
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { // Check if the object are in the same memory location, implements reflexivity
+		if (this == obj) { // Check if both pointers are pointing to the same memory location, implements reflexivity
 			return true;
 		}
 		if (obj == null) { // Return false if compared with null
@@ -101,6 +102,12 @@ public class User {
 		}
 		User other = (User) obj;
 		return Objects.equals(nickname, other.nickname);
+	}
+
+
+	@Override
+	public String toString() {
+		return "User [nickname=" + nickname + "]";
 	}
 
 

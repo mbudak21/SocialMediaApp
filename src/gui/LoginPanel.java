@@ -117,18 +117,17 @@ public class LoginPanel extends JPanel implements ActionListener {
 //		System.out.println("------------------------------------");
 		if(e.getSource() == LoginButton ) {
 			System.out.println("LoginButton pressed");
-			System.out.println(username.getText());
-			System.out.println(password.getText());
-			
 			User user = User.Login(username.getText(), password.getText());
 			if (user != null) {
 				// Login successful
-				System.out.printf("User: %s successful logged in", user.getNickname());
+				System.out.printf("User: %s successfuly logged in", user.getNickname());
+				status.setText("Login Successful");
+				status.setForeground(Color.GREEN);
 				
 			}
 			else {
 				// wrong credentials
-				System.out.println(user);
+				status.setForeground(Color.RED);
 				System.out.printf("Wrong username or password");
 				status.setText("Wrong username or password");
 				

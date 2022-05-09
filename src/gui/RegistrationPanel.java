@@ -115,7 +115,7 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 			        if (new String(passwordField.getPassword()).equals(passString)) { // If the fields text equals "New Password"
 			        	passwordField.setText("");
 			        	passwordField.setForeground(Color.BLACK);
-			        	passwordField.setEchoChar('•');
+			        	passwordField.setEchoChar('ï¿½');
 			        }
 
 		    }
@@ -212,48 +212,48 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 			
 			// Checks if the user has inputed right parameters for registration
 			// Check if any of the textFields are empty
-			/*
-	JTextFieldCustom txtFirstName;
-	JTextFieldCustom txtSurname;
-	JTextFieldCustom txtUsername;
-	JPasswordField passwordField;
-	JTextFieldCustom txtEmail;
-			 */
-			// get the current usernames of users
-			System.out.println(User.getUsers().contains("mbudak21")); 
 			
 			if(txtFirstName.getText().equals("") || txtFirstName.getText().contains(" ")) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Invalid First Name");
 				
 			}
 			else if(txtSurname.getText().equals("Surname") || txtSurname.getText().contains(" ")) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Invalid Surname");
 				
 			}
 			else if(txtUsername.getText().equals("New Username") || txtUsername.getText().contains(" ")) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Invalid Username");
 				
 			}
-			else if(txtUsername.getText().equals("New Username")) {
-				labelStatus.setText("This Username is aready taken, try another one");
+			else if(User.search(txtUsername.getText())) {
+				labelStatus.setForeground(Color.RED);
+				labelStatus.setText("This Username is aready taken");
 				
 			}
 			else if(new String(passwordField.getPassword()).equals("New Password") || new String(passwordField.getPassword()).contains(" ")) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Invalid Password");
 				
 			}
 			else if (new String(passwordField.getPassword()).length() < 8) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Password must be longer than 8 characters");
 			}
 			else if(txtEmail.getText().equals("email adress") || txtEmail.getText().contains(" ")) {
+				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("Invalid email");
 				
 			}
 			else{ // Login parameters are good for registrations
 				// Register the user
-				labelStatus.setText("");
-				//User(String nickname, String password, String name, String surname, int age, String email)
-				new User(txtUsername.getText(), new String(passwordField.getPassword()), txtFirstName.getText(), txtSurname.getText(), txtEmail.getText(), 0);
+				labelStatus.setForeground(Color.GREEN);
+				
+				labelStatus.setText("Registration Successful");
+				User user = new User(txtUsername.getText(), new String(passwordField.getPassword()), txtFirstName.getText(), txtSurname.getText(), txtEmail.getText(), 0);
+				System.out.printf("New user registered: %s /n", user);
 			}
 			
 		}
