@@ -6,16 +6,19 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 
 @SuppressWarnings({ "serial" })
-public class MyFrame extends JFrame {
+public class MainFrame extends JFrame {
 	
 	
-	MyFrame(){
+	MainFrame(){
 		
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500, 500);
+		//this.setSize(416, 379);
+		this.setBounds(750, 350, 416, 339);
 		setLayout(new GridBagLayout());
-		this.setMinimumSize(new Dimension(350, 240));
+		this.setMinimumSize(new Dimension(416, 339));
+		
+
 		
 		
 		

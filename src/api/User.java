@@ -13,6 +13,7 @@ public class User {
 	String surname;
 	int age;
 	String email;
+	String dateOfBirth;
 	
 	//Other fields
 	Set<User> UsersWhoFollowThis = new HashSet<User>(); // users who follow the instance
@@ -35,13 +36,13 @@ public class User {
 		create groups, delete groups they created, and remove users from groups they created.
 	 */
 	
-	User(String nickname, String password, String name, String surname, int age, String email){
-		this.nickname = nickname;
-		this.password = password;
-		this.name 	= name;
-		this.surname	= surname;
-		this.age = age;
-		this.email = email;
+	public User(String nickname, String password, String name, String surname, String email, int age){
+		this.nickname		= nickname;
+		this.password		= password;
+		this.name				= name;
+		this.surname			= surname;
+		this.email				= email;
+		this.age					= age;
 
 
 		if (User.users.contains(this)) { // If the users list already has the user with the same nickname do not add the user to the list
@@ -55,13 +56,25 @@ public class User {
 		}
 	} // End of constructor
 	
+	
 	public static User Login(String nickname, String password) {
+		if (User.search(nickname) == true) {
+		    for(User user : User.getUsers()) {
+		    	if(user.getNickname() == nickname && user.getPassword() == password) {
+		    		return user;
+		    	}
+		    }
+		}
+		return null;
+	}
+	
+	public static Boolean search(String nickname) {
 	    for(User user : User.getUsers()) {
-	    	if(user.getNickname() == nickname && user.getPassword() == password) {
-	    		return user;
+	    	if(user.getNickname().equals(nickname)) {
+	    		return true;
 	    	}
 	    }
-	    return null;
+	    	return false;
 	}
 
 
