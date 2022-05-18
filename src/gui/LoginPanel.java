@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import api.User;
 
@@ -87,6 +88,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		LoginButton.addActionListener(this);
 		LoginButton.setFocusable(false);
 		LoginButton.setPreferredSize(new Dimension(90, 22));
+		LoginButton.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 1; gbc.insets = new Insets(8, 0, 0, 5); // up, left, bottom, right
 		this.add(LoginButton, gbc);
 		
@@ -94,6 +96,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		RegisterButton.addActionListener(this);
 		RegisterButton.setFocusable(false);
 		RegisterButton.setPreferredSize(new Dimension(90, 22));
+		RegisterButton.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		gbc.gridx = 1; gbc.gridy = 4; gbc.gridwidth = 1;  gbc.insets = new Insets(8, 5, 0, 0);
 		this.add(RegisterButton, gbc);
 		
@@ -117,18 +120,28 @@ public class LoginPanel extends JPanel implements ActionListener {
 //		System.out.println("------------------------------------");
 		if(e.getSource() == LoginButton ) {
 			System.out.println("LoginButton pressed");
-			User user = User.Login(username.getText(), password.getText());
+			
+//			User user = User.Login(username.getText(), password.getText());
+			//FOR DEBUG
+			User user = User.Login("mbudak21", "Bjh310hyy");
+			
 			if (user != null) {
 				// Login successful
-				System.out.printf("User: %s successfuly logged in", user.getNickname());
+				this.setVisible(false);
+				System.out.printf("User: %s successfuly logged in\n", user.getNickname());
 				status.setText("Login Successful");
 				status.setForeground(Color.GREEN);
+				
+				MainPagePanel MainPagePanel = new MainPagePanel(this, user);
+				MainFrame = (JFrame) SwingUtilities.getWindowAncestor(this); // Get the parent frame
+				MainFrame.add(MainPagePanel);
+				MainPagePanel.setVisible(true);
 				
 			}
 			else {
 				// wrong credentials
 				status.setForeground(Color.RED);
-				System.out.printf("Wrong username or password");
+				System.out.printf("Wrong username or password\n");
 				status.setText("Wrong username or password");
 				
 			}
@@ -139,7 +152,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			if (registrationPane == null) {
 				RegistrationPanel registrationPane = new RegistrationPanel(this);
-				System.out.println(registrationPane);
 				MainFrame = (JFrame) SwingUtilities.getWindowAncestor(this); // Get the parent frame
 				MainFrame.add(registrationPane);
 				registrationPane.setVisible(true);

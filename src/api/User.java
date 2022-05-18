@@ -1,8 +1,14 @@
 package api;
 
+import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.swing.ImageIcon;
+
+import gui.ContentPanel;
 
 public class User {
 	static Set<User> users = new HashSet<User>();
@@ -14,12 +20,13 @@ public class User {
 	int age;
 	String email;
 	String dateOfBirth;
+	ImageIcon profilePhoto;
 	
 	//Other fields
 	Set<User> UsersWhoFollowThis = new HashSet<User>(); // users who follow the instance
 	Set<User> UsersWhoThisFollows = new HashSet<User>(); // 
 	Set<Group> groupsJoined = new HashSet<Group>();
-	Set<Content> postsCreated = new HashSet<Content>();
+	ArrayList<Content> contentCreated = new ArrayList<Content>();
 	Boolean isPremium = false;
 	Set<Group> groupsCreated = new HashSet<Group>(); // If the user is premium
 	
@@ -36,13 +43,21 @@ public class User {
 		create groups, delete groups they created, and remove users from groups they created.
 	 */
 	
-	public User(String nickname, String password, String name, String surname, String email, int age){
+	public User(String nickname, String password, String name, String surname, String email, int age, ImageIcon profilePhoto){
 		this.nickname		= nickname;
 		this.password		= password;
 		this.name			= name;
 		this.surname		= surname;
 		this.email			= email;
 		this.age			= age;
+		
+		// Default the photo if the input it null
+		if (profilePhoto == null) {
+			this.profilePhoto = new ImageIcon(ContentPanel.class.getResource("/gui/images/defaultUserProfilePicture.png"));
+		}
+		else {
+			this.profilePhoto = profilePhoto;
+		}
 
 
 		if (User.users.contains(this)) { // If the users list already has the user with the same nickname do not add the user to the list
@@ -56,9 +71,23 @@ public class User {
 		}
 	} // End of constructor
 	
+	public boolean createContent(String title, String text, ImageIcon image) {
+		Content content = new Content(this, title, text, image);
+		if (content.IsValid()) {
+			contentCreated.add(content);
+			return true;
+
+		}
+		else {
+			// Title has already been taken
+			return true;
+		}
+
+	}
+	
 	
 	public static User Login(String nickname, String password) {
-		if (User.search(nickname) == true) {
+		if (User.match(nickname) == true) {
 		    for(User user : User.getUsers()) {
 		    	//System.out.printf("%s: %b, %b\n",user.getNickname(), user.getNickname() == nickname,user.getPassword() == password);
 		    	if(user.getNickname().equals(nickname) && user.getPassword().equals(password)) {
@@ -68,14 +97,43 @@ public class User {
 		}
 		return null;
 	}
+	public static ArrayList<User> search(String nickname) {
+		ArrayList<User> usersFound = new ArrayList<User>();
+	    for(User user : User.getUsers()) {
+	    	if(user.getNickname().contains(nickname) || nickname.contains(user.getNickname())) {
+	    		usersFound.add(user);
+	    	}
+	    }
+	    return usersFound;
+	}
 	
-	public static Boolean search(String nickname) {
+	public static Boolean match(String nickname) {
 	    for(User user : User.getUsers()) {
 	    	if(user.getNickname().equals(nickname)) {
 	    		return true;
 	    	}
 	    }
 	    	return false;
+	}
+	
+	public Boolean follow(User other) {
+		if(this.getUsersWhoThisFollows().contains(other)) {
+			return false;
+		}
+		else {
+			this.getUsersWhoThisFollows().add(other);
+			return true;
+		}
+	}
+	
+	public Boolean unfollow(User other) {
+		if(this.getUsersWhoThisFollows().contains(other)) {
+			this.getUsersWhoThisFollows().remove(other);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 
@@ -258,10 +316,24 @@ public class User {
 	/**
 	 * @return the postsCreated
 	 */
-	public Set<Content> getPostsCreated() {
-		return postsCreated;
+	public ArrayList<Content> getContentCreated() {
+		return contentCreated;
 	}
 
+
+	/**
+	 * @return the profilePhoto
+	 */
+	public ImageIcon getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	/**
+	 * @param profilePhoto the profilePhoto to set
+	 */
+	public void setProfilePhoto(ImageIcon profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
 
 	/**
 	 * @return the groupsCreated

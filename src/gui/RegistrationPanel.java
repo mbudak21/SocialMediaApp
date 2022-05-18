@@ -77,7 +77,7 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 		buttonBack.addActionListener(this);
 		buttonBack.setBounds(370, 11, 20, 20);
 		buttonBack.setBorder(new EmptyBorder(0, 0, 0, 0));
-		buttonBack.setIcon(new ImageIcon("backArrow.png"));
+		buttonBack.setIcon(new ImageIcon(ContentPanel.class.getResource("/gui/images/backArrow.png")));
 		add(buttonBack);
 		
 		// TextField: txtFirstName
@@ -115,7 +115,7 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 			        if (new String(passwordField.getPassword()).equals(passString)) { // If the fields text equals "New Password"
 			        	passwordField.setText("");
 			        	passwordField.setForeground(Color.BLACK);
-			        	passwordField.setEchoChar('�');
+			        	passwordField.setEchoChar('*');
 			        }
 
 		    }
@@ -228,7 +228,7 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 				labelStatus.setText("Invalid Username");
 				
 			}
-			else if(User.search(txtUsername.getText())) {
+			else if(User.match(txtUsername.getText())) {
 				labelStatus.setForeground(Color.RED);
 				labelStatus.setText("This Username is aready taken");
 				
@@ -252,7 +252,7 @@ public class RegistrationPanel extends JPanel implements ActionListener {
 				labelStatus.setForeground(Color.GREEN);
 				
 				labelStatus.setText("Registration Successful");
-				User user = new User(txtUsername.getText(), new String(passwordField.getPassword()), txtFirstName.getText(), txtSurname.getText(), txtEmail.getText(), 0);
+				User user = new User(txtUsername.getText(), new String(passwordField.getPassword()), txtFirstName.getText(), txtSurname.getText(), txtEmail.getText(), 0, null);
 				System.out.printf("New user registered: %s /n", user);
 			}
 			
